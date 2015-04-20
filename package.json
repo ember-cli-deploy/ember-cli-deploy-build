@@ -1,7 +1,7 @@
 {
   "name": "ember-cli-deploy-build",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.1.0",
+  "description": "A Build Plugin for ember-cli-deploy",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,14 +11,15 @@
     "build": "ember build",
     "test": "ember try:testall"
   },
-  "repository": "",
+  "repository": "https://github.com/zapnito/ember-cli-deploy-build",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Aaron Chambers and John Beer",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.2",
+    "chalk": "^1.0.0",
     "ember-cli": "0.2.3",
     "ember-cli-app-version": "0.3.3",
     "ember-cli-content-security-policy": "0.4.0",
@@ -29,12 +30,13 @@
     "ember-cli-qunit": "0.3.10",
     "ember-cli-uglify": "1.0.1",
     "ember-data": "1.0.0-beta.16.1",
-    "ember-export-application-global": "^1.0.2",
     "ember-disable-prototype-extensions": "^1.0.0",
+    "ember-export-application-global": "^1.0.2",
     "ember-try": "0.0.4"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember-cli-deploy-plugin"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.0.0"
