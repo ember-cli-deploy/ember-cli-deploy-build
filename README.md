@@ -1,6 +1,10 @@
-# Ember-cli-deploy-build
+# ember-cli-deploy-build
 
-This README outlines the details of collaborating on this Ember addon.
+> A Build Plugin for ember-cli-deploy
+
+This addon is an `ember-cli-deploy-plugin`.
+
+This addon will only work with ember-cli-deploy *>= v0.5.0* which is not yet released.
 
 ## Installation
 
