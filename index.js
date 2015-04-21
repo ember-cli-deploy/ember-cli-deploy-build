@@ -2,6 +2,7 @@
 'use strict';
 
 var chalk = require('chalk');
+var glob  = require('glob');
 
 module.exports = {
   name: 'ember-cli-deploy-build',
@@ -36,6 +37,19 @@ module.exports = {
           .then(function() {
             ui.writeLine(chalk.green('Built project successfully. Stored in "' +
               outputPath + '".'));
+          })
+          .then(function() {
+            var files = glob.sync(outputPath + '/index.html', { nonull: false });
+
+            if (files && files.length) {
+              context.data.indexPath = files[0];
+            }
+
+            files = glob.sync(outputPath + '**/**/*', { nonull: false, ignore: '**/index.html' });
+
+            if (files && files.length) {
+              context.data.assetPaths = files;
+            }
           })
           .catch(function(err) {
             ui.writeLine(chalk.red('Build failed.'));
