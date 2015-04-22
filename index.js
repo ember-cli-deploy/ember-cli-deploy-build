@@ -8,16 +8,35 @@ module.exports = {
   name: 'ember-cli-deploy-build',
 
   createDeployPlugin: function(options) {
+    function pipelineData(outputPath) {
+      var data = {};
+
+      var files = glob.sync(outputPath + '/index.html', { nonull: false });
+
+      if (files && files.length) {
+        data.indexPath = files[0];
+      }
+
+      files = glob.sync(outputPath + '**/**/*', { nonull: false, ignore: '**/index.html' });
+
+      if (files && files.length) {
+        data.assetPaths = files;
+      }
+
+      return data;
+    }
+
     return {
       name: options.name,
 
       build: function(context) {
-        var config  = context.config.rawConfig.build;
-        var ui      = context.ui;
-        var project = context.project;
+        var deployment = context.deployment;
+        var ui         = deployment.ui;
+        var project    = deployment.project;
+        var config     = deployment.config[this.name] || {};
 
         var outputPath = 'dist';
-        var buildEnv   = config.buildEnv;
+        var buildEnv   = config.buildEnv || 'production';
 
         ui.startProgress(chalk.green('Building'), chalk.green('.'));
 
@@ -38,19 +57,7 @@ module.exports = {
             ui.writeLine(chalk.green('Built project successfully. Stored in "' +
               outputPath + '".'));
           })
-          .then(function() {
-            var files = glob.sync(outputPath + '/index.html', { nonull: false });
-
-            if (files && files.length) {
-              context.data.indexPath = files[0];
-            }
-
-            files = glob.sync(outputPath + '**/**/*', { nonull: false, ignore: '**/index.html' });
-
-            if (files && files.length) {
-              context.data.assetPaths = files;
-            }
-          })
+          .then(pipelineData.bind(this, outputPath))
           .catch(function(err) {
             ui.writeLine(chalk.red('Build failed.'));
             ui.writeError(err);
