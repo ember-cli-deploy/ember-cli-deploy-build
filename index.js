@@ -1,29 +1,37 @@
 /* jshint node: true */
 'use strict';
 
-var chalk = require('chalk');
+var Promise = require('ember-cli/lib/ext/promise');
+
 var glob  = require('glob');
+var chalk = require('chalk');
+var blue  = chalk.blue;
 
 module.exports = {
   name: 'ember-cli-deploy-build',
 
   createDeployPlugin: function(options) {
-    function pipelineData(outputPath) {
-      var data = {};
+    function _beginMessage(ui, outputPath) {
+      ui.write(blue('|      '));
+      ui.writeLine(blue('- building into `' + outputPath + '`'));
 
-      var files = glob.sync(outputPath + '/index.html', { nonull: false });
+      return Promise.resolve();
+    }
+
+    function _successMessages(ui, outputPath) {
+      var files = glob.sync(outputPath + '**/**/*', { nonull: false, nodir: true });
 
       if (files && files.length) {
-        data.indexPath = files[0];
+        files.forEach(function(path) {
+          ui.write(blue('|      '));
+          ui.writeLine(blue('- ' + path));
+        });
       }
 
-      files = glob.sync(outputPath + '**/**/*', { nonull: false, ignore: '**/index.html' });
+      ui.write(blue('|      '));
+      ui.writeLine(blue('- build successful'));
 
-      if (files && files.length) {
-        data.assetPaths = files;
-      }
-
-      return data;
+      return Promise.resolve(files);
     }
 
     return {
@@ -38,8 +46,6 @@ module.exports = {
         var outputPath = 'dist';
         var buildEnv   = config.buildEnv || 'production';
 
-        ui.startProgress(chalk.green('Building'), chalk.green('.'));
-
         var Builder  = require('ember-cli/lib/models/builder');
         var builder = new Builder({
           ui: ui,
@@ -48,21 +54,25 @@ module.exports = {
           project: project
         });
 
-        return builder.build()
+        return _beginMessage(ui, outputPath)
+          .then(builder.build.bind(builder))
           .finally(function() {
-            ui.stopProgress();
             return builder.cleanup();
           })
-          .then(function() {
-            ui.writeLine(chalk.green('Built project successfully. Stored in "' +
-              outputPath + '".'));
-          })
-          .then(pipelineData.bind(this, outputPath))
-          .catch(function(err) {
-            ui.writeLine(chalk.red('Build failed.'));
-            ui.writeError(err);
+          .then(_successMessages.bind(this, ui, outputPath))
+          .then(function(files) {
+            files = files || [];
 
-            return 1;
+            return {
+              distDir: outputPath,
+              distFiles: files
+            };
+          })
+          .catch(function(error) {
+            ui.write(blue('|      '));
+            ui.writeLine(chalk.red('build failed'));
+
+            return Promise.reject(error);
           });
       }
     }
