@@ -12,24 +12,24 @@ module.exports = {
 
   createDeployPlugin: function(options) {
     function _beginMessage(ui, outputPath) {
-      ui.write(blue('|      '));
-      ui.writeLine(blue('- building into `' + outputPath + '`'));
+      ui.write(blue('|    '));
+      ui.writeLine(blue('- building files to `' + outputPath + '`'));
 
       return Promise.resolve();
     }
 
-    function _successMessages(ui, outputPath) {
-      var files = glob.sync(outputPath + '**/**/*', { nonull: false, nodir: true });
+    function _successMessage(ui, outputPath) {
+      var files = glob.sync('**/**/*', { nonull: false, nodir: true, cwd: outputPath });
 
       if (files && files.length) {
         files.forEach(function(path) {
-          ui.write(blue('|      '));
-          ui.writeLine(blue('- ' + path));
+          ui.write(blue('|    '));
+          ui.writeLine(blue('- built: ' + path));
         });
       }
 
-      ui.write(blue('|      '));
-      ui.writeLine(blue('- build successful'));
+      ui.write(blue('|    '));
+      ui.writeLine(blue('- build ok'));
 
       return Promise.resolve(files);
     }
@@ -59,7 +59,7 @@ module.exports = {
           .finally(function() {
             return builder.cleanup();
           })
-          .then(_successMessages.bind(this, ui, outputPath))
+          .then(_successMessage.bind(this, ui, outputPath))
           .then(function(files) {
             files = files || [];
 
@@ -69,7 +69,7 @@ module.exports = {
             };
           })
           .catch(function(error) {
-            ui.write(blue('|      '));
+            ui.write(blue('|    '));
             ui.writeLine(chalk.red('build failed'));
 
             return Promise.reject(error);
