@@ -56,7 +56,7 @@ module.exports = {
         var project    = deployment.project;
         var config     = deployment.config[this.name] || {};
 
-        var outputPath = 'dist';
+        var outputPath = config.outputPath;
         var buildEnv   = config.buildEnv || 'production';
 
         var Builder  = require('ember-cli/lib/models/builder');

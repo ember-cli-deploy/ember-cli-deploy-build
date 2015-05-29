@@ -68,7 +68,7 @@ describe('build plugin', function() {
           config: {
             build: {
               buildEnv: 'development',
-              buildPath: 'tmp/dist-deploy',
+              outputPath: 'tmp/dist-deploy',
             }
           }
         }
@@ -80,7 +80,7 @@ describe('build plugin', function() {
       return assert.isFulfilled(plugin.build.call(plugin, context))
         .then(function(result) {
           assert.deepEqual(result, {
-            distDir: 'dist',
+            distDir: 'tmp/dist-deploy',
             distFiles: [
                'assets/dummy.css',
                'assets/dummy.js',

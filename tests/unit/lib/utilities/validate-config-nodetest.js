@@ -43,7 +43,7 @@ describe('validate-config', function() {
       return assert.isFulfilled(subject(mockUi, config))
         .then(function() {
           assert.isDefined(config.buildEnv);
-          assert.isDefined(config.buildPath);
+          assert.isDefined(config.outputPath);
         });
     });
 
@@ -52,11 +52,11 @@ describe('validate-config', function() {
     });
   });
 
-  describe('with a buildEnv and buildPath provided', function () {
+  describe('with a buildEnv and outputPath provided', function () {
     beforeEach(function() {
       config = {
         buildEnv: 'development',
-        buildPath: 'tmp/dist-deploy'
+        outputPath: 'tmp/dist-deploy'
       };
     });
     it('does not warns about missing optional config', function() {
