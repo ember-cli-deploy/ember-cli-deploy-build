@@ -6,14 +6,15 @@ var Promise = require('ember-cli/lib/ext/promise');
 var glob  = require('glob');
 var chalk = require('chalk');
 var blue  = chalk.blue;
+var validateConfig = require('./lib/utilities/validate-config');
 
 module.exports = {
   name: 'ember-cli-deploy-build',
 
   createDeployPlugin: function(options) {
-    function _beginMessage(ui, outputPath) {
+    function _beginMessage(ui, buildEnv, outputPath) {
       ui.write(blue('|    '));
-      ui.writeLine(blue('- building files to `' + outputPath + '`'));
+      ui.writeLine(blue('- building app using buildEnv `' + buildEnv + '` to `' + outputPath + '`'));
 
       return Promise.resolve();
     }
@@ -37,6 +38,18 @@ module.exports = {
     return {
       name: options.name,
 
+      willDeploy: function(context) {
+        var deployment = context.deployment;
+        var ui         = deployment.ui;
+        var config     = deployment.config[this.name] = deployment.config[this.name] || {};
+
+        return validateConfig(ui, config)
+          .then(function() {
+            ui.write(blue('|    '));
+            ui.writeLine(blue('- config ok'));
+          });
+      },
+
       build: function(context) {
         var deployment = context.deployment;
         var ui         = deployment.ui;
@@ -54,7 +67,7 @@ module.exports = {
           project: project
         });
 
-        return _beginMessage(ui, outputPath)
+        return _beginMessage(ui, buildEnv, outputPath)
           .then(builder.build.bind(builder))
           .finally(function() {
             return builder.cleanup();
