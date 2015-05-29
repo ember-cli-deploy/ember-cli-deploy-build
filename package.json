@@ -9,7 +9,7 @@
   "scripts": {
     "start": "ember server",
     "build": "ember build",
-    "test": "ember try:testall"
+    "test": "node tests/runner.js"
   },
   "repository": "https://github.com/zapnito/ember-cli-deploy-build",
   "engines": {
@@ -19,6 +19,8 @@
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.2",
+    "chai": "^2.2.0",
+    "chai-as-promised": "^5.0.0",
     "ember-cli": "0.2.3",
     "ember-cli-app-version": "0.3.3",
     "ember-cli-content-security-policy": "0.4.0",
@@ -31,7 +33,9 @@
     "ember-data": "1.0.0-beta.16.1",
     "ember-disable-prototype-extensions": "^1.0.0",
     "ember-export-application-global": "^1.0.2",
-    "ember-try": "0.0.4"
+    "ember-try": "0.0.4",
+    "glob": "^5.0.5",
+    "mocha": "^2.2.4"
   },
   "keywords": [
     "ember-addon",
@@ -40,7 +44,8 @@
   "dependencies": {
     "chalk": "^1.0.0",
     "ember-cli-babel": "^5.0.0",
-    "glob": "^5.0.5"
+    "glob": "^5.0.5",
+    "rsvp": "^3.0.18"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
