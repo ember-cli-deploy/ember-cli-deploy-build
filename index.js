@@ -14,7 +14,7 @@ module.exports = {
   createDeployPlugin: function(options) {
     function _beginMessage(ui, buildEnv, outputPath) {
       ui.write(blue('|    '));
-      ui.writeLine(blue('- building app using buildEnv `' + buildEnv + '` to `' + outputPath + '`'));
+      ui.writeLine(blue('- building app to `' + outputPath + '` using buildEnv `' + buildEnv + '`...'));
 
       return Promise.resolve();
     }
@@ -25,7 +25,7 @@ module.exports = {
       if (files && files.length) {
         files.forEach(function(path) {
           ui.write(blue('|    '));
-          ui.writeLine(blue('- built: ' + path));
+          ui.writeLine(blue('- ✔  ' + path));
         });
       }
 
