@@ -6,49 +6,103 @@ var RSVP = require('ember-cli/lib/ext/promise');
 var assert  = require('ember-cli/tests/helpers/assert');
 
 describe('build plugin', function() {
-  var subject;
+  var subject, mockUi, config;
 
-  before(function() {
+  beforeEach(function() {
     subject = require('../../index');
+    mockUi = {
+      messages: [],
+      write: function() { },
+      writeLine: function(message) {
+        this.messages.push(message);
+      }
+    };
   });
 
   it('has a name', function() {
-    var result = subject.createDeployPlugin({
+    var plugin = subject.createDeployPlugin({
       name: 'test-plugin'
     });
 
-    assert.equal(result.name, 'test-plugin');
+    assert.equal(plugin.name, 'test-plugin');
   });
 
   it('implements the correct hooks', function() {
-    var result = subject.createDeployPlugin({
+    var plugin = subject.createDeployPlugin({
       name: 'test-plugin'
     });
 
-    assert.equal(typeof result.configure, 'function');
-    assert.equal(typeof result.build, 'function');
+    assert.equal(typeof plugin.configure, 'function');
+    assert.equal(typeof plugin.build, 'function');
   });
 
   describe('configure hook', function() {
-    it('resolves if config is ok', function() {
-      var plugin = subject.createDeployPlugin({
-        name: 'build'
+    var plugin, context;
+    describe('without providing config', function () {
+      beforeEach(function() {
+        config = { };
+        plugin = subject.createDeployPlugin({
+          name: 'build'
+        });
+        context = {
+          ui: mockUi,
+          config: config
+        };
+        plugin.beforeHook(context);
+      });
+      it('warns about missing optional config', function() {
+        plugin.configure(context);
+        var messages = mockUi.messages.reduce(function(previous, current) {
+          if (/- Missing config:\s.*, using default:\s/.test(current)) {
+            previous.push(current);
+          }
+
+          return previous;
+        }, []);
+
+        assert.equal(messages.length, 2);
       });
 
-      var context = {
-        deployment: {
-          ui: { write: function() {}, writeLine: function() {} },
-          config: {
+      it('adds default config to the config object', function() {
+        plugin.configure(context);
+        assert.isDefined(config.build.environment);
+        assert.isDefined(config.build.outputPath);
+      });
+    });
+
+    describe('with a build environment and outputPath provided', function () {
+      beforeEach(function() {
+        config = {
+          build: {
+            environment: 'development',
+            outputPath: 'tmp/dist-deploy'
           }
-        }
-      };
-      return assert.isFulfilled(plugin.configure.call(plugin, context));
+        };
+        plugin = subject.createDeployPlugin({
+          name: 'build'
+        });
+        context = {
+          ui: mockUi,
+          config: config
+        };
+        plugin.beforeHook(context);
+      });
+      it('does not warn about missing optional config', function() {
+        plugin.configure(context);
+        var messages = mockUi.messages.reduce(function(previous, current) {
+          if (/- Missing config:\s.*, using default:\s/.test(current)) {
+            previous.push(current);
+          }
+
+          return previous;
+        }, []);
+        assert.equal(messages.length, 0);
+      });
     });
   });
 
   describe('build hook', function() {
-    var plugin;
-    var context;
+    var plugin, context;
 
     beforeEach(function() {
       plugin = subject.createDeployPlugin({
@@ -56,28 +110,21 @@ describe('build plugin', function() {
       });
 
       context = {
-        redisClient: {
-          upload: function() {
-            return RSVP.resolve('redis-key');
-          }
-        },
-        tag: 'some-tag',
-        deployment: {
-          ui: { write: function() {},  writeLine: function() {} },
-          project: { name: function() { return 'test-project'; }, addons: [], root: 'tests/dummy' },
-          config: {
-            build: {
-              buildEnv: 'development',
-              outputPath: 'tmp/dist-deploy',
-            }
+        ui: mockUi,
+        project: { name: function() { return 'test-project'; }, addons: [], root: 'tests/dummy' },
+        config: {
+          build: {
+            buildEnv: 'development',
+            outputPath: 'tmp/dist-deploy',
           }
         }
       };
+      plugin.beforeHook(context);
     });
 
-    it('builds the app and returns distDir and distFiles', function(done) {
+    it('builds the app and resolves with distDir and distFiles', function(done) {
       this.timeout(50000);
-      return assert.isFulfilled(plugin.build.call(plugin, context))
+      return assert.isFulfilled(plugin.build(context))
         .then(function(result) {
           assert.deepEqual(result, {
             distDir: 'tmp/dist-deploy',

@@ -2,77 +2,39 @@
 'use strict';
 
 var Promise = require('ember-cli/lib/ext/promise');
-
 var glob  = require('glob');
-var chalk = require('chalk');
-var blue  = chalk.blue;
-var validateConfig = require('./lib/utilities/validate-config');
+var DeployPluginBase = require('ember-cli-deploy-plugin');
 
 module.exports = {
   name: 'ember-cli-deploy-build',
 
   createDeployPlugin: function(options) {
-    function _beginMessage(ui, buildEnv, outputPath) {
-      ui.write(blue('|    '));
-      ui.writeLine(blue('- building app to `' + outputPath + '` using buildEnv `' + buildEnv + '`...'));
-
-      return Promise.resolve();
-    }
-
-    function _successMessage(ui, outputPath) {
-      var files = glob.sync('**/**/*', { nonull: false, nodir: true, cwd: outputPath });
-
-      if (files && files.length) {
-        files.forEach(function(path) {
-          ui.write(blue('|    '));
-          ui.writeLine(blue('- ✔  ' + path));
-        });
-      }
-
-      ui.write(blue('|    '));
-      ui.writeLine(blue('- build ok'));
-
-      return Promise.resolve(files);
-    }
-
-    return {
+    var DeployPlugin = DeployPluginBase.extend({
       name: options.name,
-
-      configure: function(context) {
-        var deployment = context.deployment;
-        var ui         = deployment.ui;
-        var config     = deployment.config[this.name] = deployment.config[this.name] || {};
-
-        return validateConfig(ui, config)
-          .then(function() {
-            ui.write(blue('|    '));
-            ui.writeLine(blue('- config ok'));
-          });
+      defaultConfig: {
+        environment: 'production',
+        outputPath: 'tmp/deploy-dist'
       },
 
       build: function(context) {
-        var deployment = context.deployment;
-        var ui         = deployment.ui;
-        var project    = deployment.project;
-        var config     = deployment.config[this.name] || {};
-
-        var outputPath = config.outputPath;
-        var buildEnv   = config.buildEnv || 'production';
+        var self       = this;
+        var outputPath = this.readConfig('outputPath');
+        var buildEnv   = this.readConfig('environment');
 
         var Builder  = require('ember-cli/lib/models/builder');
         var builder = new Builder({
-          ui: ui,
+          ui: this.ui,
           outputPath: outputPath,
           environment: buildEnv,
-          project: project
+          project: this.project
         });
 
-        return _beginMessage(ui, buildEnv, outputPath)
-          .then(builder.build.bind(builder))
+        this.log('building app to `' + outputPath + '` using buildEnv `' + buildEnv + '`...');
+        return builder.build()
           .finally(function() {
             return builder.cleanup();
           })
-          .then(_successMessage.bind(this, ui, outputPath))
+          .then(this._logSuccess.bind(this, outputPath))
           .then(function(files) {
             files = files || [];
 
@@ -82,12 +44,24 @@ module.exports = {
             };
           })
           .catch(function(error) {
-            ui.write(blue('|    '));
-            ui.writeLine(chalk.red('build failed'));
-
+            self.log('build failed', { color: 'red' });
             return Promise.reject(error);
           });
+      },
+      _logSuccess: function(outputPath) {
+        var self = this;
+        var files = glob.sync('**/**/*', { nonull: false, nodir: true, cwd: outputPath });
+
+        if (files && files.length) {
+          files.forEach(function(path) {
+            self.log('✔  ' + path);
+          });
+        }
+        self.log('build ok');
+
+        return Promise.resolve(files);
       }
-    }
+    });
+    return new DeployPlugin();
   }
 };
