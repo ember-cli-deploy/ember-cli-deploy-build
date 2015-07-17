@@ -21,7 +21,7 @@ module.exports = {
         var outputPath = this.readConfig('outputPath');
         var buildEnv   = this.readConfig('environment');
 
-        var Builder  = require('ember-cli/lib/models/builder');
+        var Builder  = this.project.require('ember-cli/lib/models/builder');
         var builder = new Builder({
           ui: this.ui,
           outputPath: outputPath,
