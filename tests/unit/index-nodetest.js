@@ -111,7 +111,12 @@ describe('build plugin', function() {
 
       context = {
         ui: mockUi,
-        project: { name: function() { return 'test-project'; }, addons: [], root: 'tests/dummy' },
+        project: {
+          name: function() { return 'test-project'; },
+          require: function(mod) { return require(mod); },
+          addons: [],
+          root: 'tests/dummy'
+        },
         config: {
           build: {
             buildEnv: 'development',
