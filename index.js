@@ -4,6 +4,7 @@
 var Promise = require('ember-cli/lib/ext/promise');
 var glob  = require('glob');
 var DeployPluginBase = require('ember-cli-deploy-plugin');
+var path = require('path');
 
 module.exports = {
   name: 'ember-cli-deploy-build',
@@ -13,7 +14,7 @@ module.exports = {
       name: options.name,
       defaultConfig: {
         environment: 'production',
-        outputPath: 'tmp/deploy-dist'
+        outputPath: 'tmp' + path.sep + 'deploy-dist'
       },
 
       build: function(context) {
