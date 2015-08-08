@@ -1,29 +1,69 @@
 # ember-cli-deploy-build
 
-> A Build Plugin for ember-cli-deploy
+> An ember-cli-deploy plugin to build your ember-cli application
 
-This addon is an `ember-cli-deploy-plugin`.
+<hr/>
+**WARNING: This plugin is only compatible with ember-cli-deploy versions >= 0.5.0**
+<hr/>
 
-This addon will only work with ember-cli-deploy *>= v0.5.0* which is not yet released.
+This plugin will build your ember-cli application files and output them to a directory.
+
+## What is an ember-cli-deploy plugin?
+
+A plugin is an addon that can be executed as a part of the ember-cli-deploy pipeline. A plugin will implement one or more of the ember-cli-deploy's pipeline hooks.
+
+For more information on what plugins are and how they work, please refer to the [Plugin Documentation][1].
+
+## Quick Start
+
+- Install this plugin
+
+```bash
+$ ember install ember-cli-deploy-build
+```
+
+- Run the pipeline
+
+```bash
+$ ember deploy
+```
 
 ## Installation
+Run the following command in your terminal:
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+```bash
+ember install ember-cli-deploy-build
+```
 
-## Running
+## ember-cli-deploy Hooks Implemented
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+For detailed information on what plugin hooks are and how they work, please refer to the [Plugin Documentation][1].
+
+- `configure`
+- `build`
+
+## Configuration Options
+
+For detailed information on how configuration of plugins works, please refer to the [Plugin Documentation][1].
+
+### environment
+
+The evironment for which you'd like to build. This relates directly to the environments in your `config/environment.js` file.
+
+*Default:* `'production'`
+
+### outputPath
+
+The path to the directory you'd like the project to be built in to.
+
+*Default:* `tmp/deploy-dist`
+
+## Prerequisites
+
+None
 
 ## Running Tests
 
-* `ember test`
-* `ember test --server`
+- `npm test`
 
-## Building
-
-* `ember build`
-
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+[1]: http://ember-cli.github.io/ember-cli-deploy/plugins "Plugin Documentation"
