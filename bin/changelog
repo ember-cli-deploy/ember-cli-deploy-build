@@ -20,9 +20,12 @@ var github         = new GitHubApi({version: '3.0.0'});
 var compareCommits = Promise.denodeify(github.repos.compareCommits);
 var currentVersion = 'v' + require('../package').version;
 
+var user = 'ember-cli-deploy';
+var repo = 'ember-cli-deploy-build';
+
 compareCommits({
-  user: 'zapnito',
-  repo: 'ember-cli-deploy-build',
+  user: user,
+  repo: repo,
   base: currentVersion,
   head: 'master'
 }).then(function(res) {
@@ -46,7 +49,7 @@ compareCommits({
     return a.number > b.number;
   }).map(function(pr) {
     var link   = '[#' + pr.number + ']' +
-                 '(https://github.com/zapnito/ember-cli-deploy-build/pull/' + pr.number + ')';
+                 '(https://github.com/' + user + '/' + repo + '/pull/' + pr.number + ')';
     var title  = pr.title;
     var author = '[@' + pr.author + ']' +
                  '(https://github.com/' + pr.author +')';
