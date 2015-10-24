@@ -12,6 +12,7 @@ describe('build plugin', function() {
     subject = require('../../index');
     mockUi = {
       messages: [],
+      verbose: true,
       write: function() { },
       writeLine: function(message) {
         this.messages.push(message);
