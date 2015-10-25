@@ -30,7 +30,7 @@ module.exports = {
           project: this.project
         });
 
-        this.log('building app to `' + outputPath + '` using buildEnv `' + buildEnv + '`...');
+        this.log('building app to `' + outputPath + '` using buildEnv `' + buildEnv + '`...', { verbose: true });
         return builder.build()
           .finally(function() {
             return builder.cleanup();
@@ -55,10 +55,10 @@ module.exports = {
 
         if (files && files.length) {
           files.forEach(function(path) {
-            self.log('✔  ' + path);
+            self.log('✔  ' + path, { verbose: true });
           });
         }
-        self.log('build ok');
+        self.log('build ok', { verbose: true });
 
         return Promise.resolve(files);
       }
