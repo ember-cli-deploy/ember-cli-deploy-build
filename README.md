@@ -48,7 +48,7 @@ For detailed information on how configuration of plugins works, please refer to 
 
 ### environment
 
-The evironment for which you'd like to build. This relates directly to the environments in your `config/environment.js` file.
+The environment for which you'd like to build. This relates directly to the environments in your `config/environment.js` file.
 
 *Default:* `'production'`
 
