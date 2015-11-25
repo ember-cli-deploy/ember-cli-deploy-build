@@ -50,7 +50,6 @@ module.exports = {
             files = files || [];
 
             return {
-              distDir: distDir,
               distFiles: files
             };
           })
