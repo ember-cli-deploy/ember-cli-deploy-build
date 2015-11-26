@@ -76,7 +76,9 @@ describe('build plugin', function() {
           build: {
             environment: 'development',
             outputPath: 'tmp/dist-deploy',
-            distDir: 'tmp/dist-deploy'
+            distDir: function(context) {
+              return context.distDir;
+            }
           }
         };
         plugin = subject.createDeployPlugin({
