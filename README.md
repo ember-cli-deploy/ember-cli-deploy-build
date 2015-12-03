@@ -2,7 +2,7 @@
 
 > An ember-cli-deploy plugin to build your ember-cli application
 
-![](https://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/plugins/ember-cli-deploy-build.svg)
+[![](https://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/plugins/ember-cli-deploy-build.svg)](http://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/)
 
 This plugin will build your ember-cli application files and output them to a directory.
 
