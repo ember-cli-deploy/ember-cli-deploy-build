@@ -2,9 +2,7 @@
 
 > An ember-cli-deploy plugin to build your ember-cli application
 
-<hr/>
-**WARNING: This plugin is only compatible with ember-cli-deploy versions >= 0.5.0**
-<hr/>
+![](https://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/plugins/ember-cli-deploy-build.svg)
 
 This plugin will build your ember-cli application files and output them to a directory.
 
