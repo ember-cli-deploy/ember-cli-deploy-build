@@ -1,4 +1,9 @@
-#### Community Contributions
+## 0.1.1
+
+- update ember-cli-deploy-plugin [\#25](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/25) ([ghedamat](https://github.com/ghedamat))
+- fixing a small typo [\#20](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/20) ([kiwiupover](https://github.com/kiwiupover))
+
+## 0.1.0
 
 - [#1](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/1) Update chalk to be a production dependency instead of dev [@achambers](https://github.com/achambers)
 - [#2](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/2) Add circle.yml [@achambers](https://github.com/achambers)
