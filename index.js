@@ -5,6 +5,7 @@ var Promise = require('ember-cli/lib/ext/promise');
 var glob  = require('glob');
 var DeployPluginBase = require('ember-cli-deploy-plugin');
 var path = require('path');
+var fs = require('fs');
 
 module.exports = {
   name: 'ember-cli-deploy-build',
@@ -15,6 +16,11 @@ module.exports = {
       defaultConfig: {
         environment: 'production',
         outputPath: 'tmp' + path.sep + 'deploy-dist'
+      },
+
+      willBuild: function() {
+        var outputPath = this.readConfig('outputPath');
+        this._deleteDistFolder(outputPath);
       },
 
       build: function(context) {
@@ -61,7 +67,28 @@ module.exports = {
         self.log('build ok', { verbose: true });
 
         return Promise.resolve(files);
-      }
+      },
+      _deleteDistFolder: function(outputPath) {
+        var self = this;
+
+        try {
+         if (fs.statSync(outputPath)) {
+           self.log('Deleting dist folder ' + outputPath, { verbose: true });
+
+           fs.readdirSync(outputPath).forEach(function(file /*, index*/) {
+             var currentPath = path.join(outputPath, file);
+             if (fs.lstatSync(currentPath).isDirectory()) {
+               self._deleteDistFolder(currentPath);
+             } else {
+               fs.unlinkSync(currentPath);
+             }
+           });
+           fs.rmdirSync(outputPath);
+         }
+       } catch (e) {
+          // no such file or directory - skip
+       }
+     }
     });
     return new DeployPlugin();
   }
