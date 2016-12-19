@@ -14,33 +14,42 @@ module.exports = {
       name: options.name,
       defaultConfig: {
         environment: 'production',
-        outputPath: 'tmp' + path.sep + 'deploy-dist'
+        outputPath: 'tmp' + path.sep + 'deploy-dist',
+        distDir: function(context) {
+          return context.distDir;
+        }
       },
 
-      build: function(context) {
-        var self       = this;
+      setup: function() {
         var outputPath = this.readConfig('outputPath');
+        return {
+          distDir: outputPath
+        };
+      },
+
+      build: function(/* context */) {
+        var self       = this;
+        var distDir    = this.readConfig('distDir');
         var buildEnv   = this.readConfig('environment');
 
         var Builder  = this.project.require('ember-cli/lib/models/builder');
         var builder = new Builder({
           ui: this.ui,
-          outputPath: outputPath,
+          outputPath: distDir,
           environment: buildEnv,
           project: this.project
         });
 
-        this.log('building app to `' + outputPath + '` using buildEnv `' + buildEnv + '`...', { verbose: true });
+        this.log('building app to `' + distDir + '` using buildEnv `' + buildEnv + '`...', { verbose: true });
         return builder.build()
           .finally(function() {
             return builder.cleanup();
           })
-          .then(this._logSuccess.bind(this, outputPath))
+          .then(this._logSuccess.bind(this, distDir))
           .then(function(files) {
             files = files || [];
 
             return {
-              distDir: outputPath,
               distFiles: files
             };
           })

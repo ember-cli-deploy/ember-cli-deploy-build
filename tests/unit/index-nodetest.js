@@ -60,8 +60,7 @@ describe('build plugin', function() {
 
           return previous;
         }, []);
-
-        assert.equal(messages.length, 2);
+        assert.equal(messages.length, 3);
       });
 
       it('adds default config to the config object', function() {
@@ -76,7 +75,10 @@ describe('build plugin', function() {
         config = {
           build: {
             environment: 'development',
-            outputPath: 'tmp/dist-deploy'
+            outputPath: 'tmp/dist-deploy',
+            distDir: function(context) {
+              return context.distDir;
+            }
           }
         };
         plugin = subject.createDeployPlugin({
@@ -102,6 +104,39 @@ describe('build plugin', function() {
     });
   });
 
+  describe('setup hook', function() {
+    var plugin, context;
+
+    beforeEach(function() {
+      plugin = subject.createDeployPlugin({
+        name: 'build'
+      });
+
+      context = {
+        ui: mockUi,
+        project: {
+          name: function() { return 'test-project'; },
+          require: function(mod) { return require(mod); },
+          addons: [],
+          root: 'tests/dummy'
+        },
+        config: {
+          build: {
+            buildEnv: 'development',
+            outputPath: 'tmp/dist-deploy'
+          }
+        }
+      };
+      plugin.beforeHook(context);
+    });
+    
+    it('resolves with distDir', function() {
+      assert.deepEqual(plugin.setup(context), {
+        distDir: 'tmp/dist-deploy'
+      });
+    });
+  });
+
   describe('build hook', function() {
     var plugin, context;
 
@@ -121,19 +156,18 @@ describe('build plugin', function() {
         config: {
           build: {
             buildEnv: 'development',
-            outputPath: 'tmp/dist-deploy',
+            distDir: 'tmp/dist-deploy'
           }
         }
       };
       plugin.beforeHook(context);
     });
 
-    it('builds the app and resolves with distDir and distFiles', function(done) {
+    it('builds the app and resolves with distFiles', function(done) {
       this.timeout(50000);
       return assert.isFulfilled(plugin.build(context))
         .then(function(result) {
           assert.deepEqual(result, {
-            distDir: 'tmp/dist-deploy',
             distFiles: [
                'assets/dummy.css',
                'assets/dummy.js',
