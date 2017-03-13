@@ -1,8 +1,6 @@
 /*jshint globalstrict: true*/
 'use strict';
 
-var RSVP = require('ember-cli/lib/ext/promise');
-
 var assert  = require('ember-cli/tests/helpers/assert');
 
 describe('build plugin', function() {
