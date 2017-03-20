@@ -7,49 +7,40 @@
     "test": "tests"
   },
   "scripts": {
-    "start": "ember server",
-    "build": "ember build",
-    "test": "node tests/runner.js"
+    "test": "node tests/runner.js && ./node_modules/.bin/eslint index.js tests/**/*.js"
   },
   "repository": "https://github.com/ember-cli-deploy/ember-cli-deploy-build",
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 4"
   },
   "author": "Aaron Chambers and the ember-cli-deploy team",
   "license": "MIT",
+  "dependencies": {
+    "chalk": "^1.0.0",
+    "ember-cli-deploy-plugin": "^0.2.1",
+    "glob": "^7.1.1",
+    "rsvp": "^3.5.0"
+  },
   "devDependencies": {
-    "broccoli-asset-rev": "^2.0.2",
-    "chai": "^2.2.0",
-    "chai-as-promised": "^5.0.0",
-    "ember-cli": "0.2.3",
-    "ember-cli-app-version": "0.3.3",
-    "ember-cli-content-security-policy": "0.4.0",
-    "ember-cli-dependency-checker": "0.0.8",
-    "ember-cli-htmlbars": "0.7.4",
-    "ember-cli-ic-ajax": "0.1.1",
-    "ember-cli-inject-live-reload": "^1.3.0",
-    "ember-cli-qunit": "0.3.10",
-    "ember-cli-release": "1.0.0-beta.1",
-    "ember-cli-uglify": "1.0.1",
-    "ember-data": "1.0.0-beta.16.1",
-    "ember-disable-prototype-extensions": "^1.0.0",
-    "ember-export-application-global": "^1.0.2",
-    "ember-try": "0.0.4",
+    "chai-as-promised": "^6.0.0",
+    "chai": "^3.5.0",
+    "ember-cli-babel": "^5.2.4",
+    "ember-cli-htmlbars": "^1.2.0",
+    "ember-cli-release": "^1.0.0-beta.2",
+    "ember-cli-shims": "^1.0.2",
+    "ember-cli": "^2.12.0",
+    "ember-source": "^2.12.0",
+    "eslint": "^3.18.0",
     "github": "^0.2.4",
-    "mocha": "^2.2.4",
+    "glob": "^7.1.1",
+    "loader.js": "^4.2.3",
+    "mocha": "^3.2.0",
     "multiline": "^1.0.2"
   },
   "keywords": [
     "ember-addon",
     "ember-cli-deploy-plugin"
   ],
-  "dependencies": {
-    "chalk": "^1.0.0",
-    "ember-cli-babel": "^5.0.0",
-    "ember-cli-deploy-plugin": "^0.2.1",
-    "glob": "^5.0.5",
-    "rsvp": "^3.0.18"
-  },
   "ember-addon": {
     "configPath": "tests/dummy/config"
   }

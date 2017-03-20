@@ -60,8 +60,12 @@ The path to the directory you'd like the project to be built in to.
 
 None
 
-## Running Tests
+## Tests
 
-- `npm test`
+* yarn test
+
+## Why `ember test` doesn't work
+
+Since this is a node-only ember-cli addon, we use mocha for testing and this package does not include many files and devDependencies which are part of ember-cli's typical `ember test` processes.
 
 [1]: https://ember-cli-deploy.github.io/ember-cli-deploy/plugins/ "Plugin Documentation"
