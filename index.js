@@ -1,7 +1,7 @@
-/* jshint node: true */
+/*eslint-env node*/
 'use strict';
 
-var Promise = require('ember-cli/lib/ext/promise');
+var RSVP = require('rsvp');
 var glob  = require('glob');
 var DeployPluginBase = require('ember-cli-deploy-plugin');
 var path = require('path');
@@ -17,7 +17,7 @@ module.exports = {
         outputPath: 'tmp' + path.sep + 'deploy-dist'
       },
 
-      build: function(context) {
+      build: function(/* context */) {
         var self       = this;
         var outputPath = this.readConfig('outputPath');
         var buildEnv   = this.readConfig('environment');
@@ -46,7 +46,7 @@ module.exports = {
           })
           .catch(function(error) {
             self.log('build failed', { color: 'red' });
-            return Promise.reject(error);
+            return RSVP.reject(error);
           });
       },
       _logSuccess: function(outputPath) {
@@ -60,7 +60,7 @@ module.exports = {
         }
         self.log('build ok', { verbose: true });
 
-        return Promise.resolve(files);
+        return RSVP.resolve(files);
       }
     });
     return new DeployPlugin();

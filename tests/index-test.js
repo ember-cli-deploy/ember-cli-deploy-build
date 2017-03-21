@@ -1,20 +1,33 @@
-/*jshint globalstrict: true*/
+/*eslint-env node*/
 'use strict';
 
-var RSVP = require('ember-cli/lib/ext/promise');
-
-var assert  = require('ember-cli/tests/helpers/assert');
+var path = require('path');
+var chai  = require('chai');
+var chaiAsPromised = require("chai-as-promised");
+chai.use(chaiAsPromised);
+var assert = chai.assert;
+var Project  = require('ember-cli/lib/models/project');
 
 describe('build plugin', function() {
   var subject, mockUi, config;
 
   beforeEach(function() {
-    subject = require('../../index');
+    subject = require('../index');
     mockUi = {
       messages: [],
       verbose: true,
+      startProgress: function() { },
       write: function() { },
       writeLine: function(message) {
+        this.messages.push(message);
+      },
+      writeError: function(message) {
+        this.messages.push(message);
+      },
+      writeDeprecateLine: function(message) {
+        this.messages.push(message);
+      },
+      writeWarnLine: function(message) {
         this.messages.push(message);
       }
     };
@@ -109,15 +122,12 @@ describe('build plugin', function() {
       plugin = subject.createDeployPlugin({
         name: 'build'
       });
-
+      var mockCli = {
+        root: path.resolve(__dirname, '..')
+      };
       context = {
         ui: mockUi,
-        project: {
-          name: function() { return 'test-project'; },
-          require: function(mod) { return require(mod); },
-          addons: [],
-          root: 'tests/dummy'
-        },
+        project: Project.projectOrnullProject(mockUi, mockCli),
         config: {
           build: {
             buildEnv: 'development',
@@ -130,7 +140,7 @@ describe('build plugin', function() {
 
     it('builds the app and resolves with distDir and distFiles', function(done) {
       this.timeout(50000);
-      return assert.isFulfilled(plugin.build(context))
+      assert.isFulfilled(plugin.build(context))
         .then(function(result) {
           assert.deepEqual(result, {
             distDir: 'tmp/dist-deploy',
@@ -138,13 +148,10 @@ describe('build plugin', function() {
                'assets/dummy.css',
                'assets/dummy.js',
                'assets/dummy.map',
-               'assets/ember-data.js.map',
-               'assets/failed.png',
-               'assets/passed.png',
-               'assets/test-loader.js',
-               'assets/test-support.css',
                'assets/test-support.js',
                'assets/test-support.map',
+               'assets/tests.js',
+               'assets/tests.map',
                'assets/vendor.css',
                'assets/vendor.js',
                'assets/vendor.map',
@@ -157,8 +164,7 @@ describe('build plugin', function() {
           });
           done();
         }).catch(function(reason){
-          console.log(reason.actual.stack);
-          done(reason.actual);
+          done(reason);
         });
     });
   });
