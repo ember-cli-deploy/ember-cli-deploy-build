@@ -64,6 +64,12 @@ None
 
 * yarn test
 
+## Faster iteration while authoring deploy plugins & configs
+
+When you're working on a deploy plugin or tweaking your deploy config, you often run `ember deploy` repeatedly, and each run usually invokes this plugin to do a full rebuild of your app, even though your app has not changed and the build options are identical.
+
+You can instead reuse the build from the previous `ember deploy` by setting the environment variable `EMBER_CLI_DEPLOY_REUSE_BUILD`. This may make your interactive testing much faster. It's safe to use during development as long as you aren't actively changing your app or altering this module's `environment` or `outputPath`.
+
 ## Why `ember test` doesn't work
 
 Since this is a node-only ember-cli addon, we use mocha for testing and this package does not include many files and devDependencies which are part of ember-cli's typical `ember test` processes.

@@ -20,6 +20,13 @@ module.exports = {
       build: function(/* context */) {
         var self       = this;
         var outputPath = this.readConfig('outputPath');
+        if (process.env.EMBER_CLI_DEPLOY_REUSE_BUILD) {
+          this.log('reusing build from `' + outputPath, { verbose: true });
+          return RSVP.resolve({
+            distDir: outputPath,
+            distFiles: glob.sync('**/*', { cwd: outputPath, nodir: true })
+          });
+        }
         var buildEnv   = this.readConfig('environment');
 
         var Builder  = this.project.require('ember-cli/lib/models/builder');
