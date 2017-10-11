@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.1.1](https://github.com/ember-cli-deploy/ember-cli-deploy-build/tree/v1.1.1) (2017-10-11)
+[Full Changelog](https://github.com/ember-cli-deploy/ember-cli-deploy-build/compare/v1.1.0...v1.1.1)
+
+**Merged pull requests:**
+
+- Use RSVP over ember-cli/lib/ext/promise [\#39](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/39) ([@chrisgame](https://github.com/chrisgame))
+
 ## [v1.1.0](https://github.com/ember-cli-deploy/ember-cli-deploy-build/tree/v1.1.0) (2017-05-04)
 [Full Changelog](https://github.com/ember-cli-deploy/ember-cli-deploy-build/compare/v1.0.0...v1.1.0)
 
