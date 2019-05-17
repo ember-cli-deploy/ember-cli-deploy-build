@@ -24,7 +24,7 @@ module.exports = {
           this.log('reusing build from `' + outputPath, { verbose: true });
           return RSVP.resolve({
             distDir: outputPath,
-            distFiles: glob.sync('**/*', { cwd: outputPath, nodir: true })
+            distFiles: glob.sync('**/*', { cwd: outputPath, nodir: true , dot: true})
           });
         }
         var buildEnv   = this.readConfig('environment');
@@ -58,7 +58,7 @@ module.exports = {
       },
       _logSuccess: function(outputPath) {
         var self = this;
-        var files = glob.sync('**/**/*', { nonull: false, nodir: true, cwd: outputPath });
+        var files = glob.sync('**/**/*', { nonull: false, nodir: true, cwd: outputPath , dot: true});
 
         if (files && files.length) {
           files.forEach(function(path) {
