@@ -1,11 +1,26 @@
 # Change Log
 
+## [1.1.2](https://github.com/ember-cli-deploy/ember-cli-deploy-build/tree/1.1.2) (2019-09-03)
+[Full Changelog](https://github.com/ember-cli-deploy/ember-cli-deploy-build/compare/v1.1.1...1.1.2)
+
+**Merged pull requests:**
+
+- Bump handlebars from 4.0.6 to 4.1.2 [\#54](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/54) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump js-yaml from 3.8.2 to 3.13.1 [\#53](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/53) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump lodash from 4.17.4 to 4.17.15 [\#52](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/52) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Remove unused packages [\#51](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/51) ([lukemelia](https://github.com/lukemelia))
+- Update mocha [\#50](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/50) ([lukemelia](https://github.com/lukemelia))
+- Remove unused ember-try package [\#49](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/49) ([lukemelia](https://github.com/lukemelia))
+- Move from ember-cli-release to ember-cli-release-tag [\#48](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/48) ([lukemelia](https://github.com/lukemelia))
+- Update to ember-cli 3.12 [\#47](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/47) ([lukemelia](https://github.com/lukemelia))
+- Update plugin link [\#44](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/44) ([achambers](https://github.com/achambers))
+
 ## [v1.1.1](https://github.com/ember-cli-deploy/ember-cli-deploy-build/tree/v1.1.1) (2017-10-11)
 [Full Changelog](https://github.com/ember-cli-deploy/ember-cli-deploy-build/compare/v1.1.0...v1.1.1)
 
 **Merged pull requests:**
 
-- Use RSVP over ember-cli/lib/ext/promise [\#39](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/39) ([@chrisgame](https://github.com/chrisgame))
+- use RSVP over ember-cli/lib/ext/promise [\#39](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/39) ([chrisgame](https://github.com/chrisgame))
 
 ## [v1.1.0](https://github.com/ember-cli-deploy/ember-cli-deploy-build/tree/v1.1.0) (2017-05-04)
 [Full Changelog](https://github.com/ember-cli-deploy/ember-cli-deploy-build/compare/v1.0.0...v1.1.0)
