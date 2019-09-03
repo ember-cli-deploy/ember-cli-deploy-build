@@ -1,7 +1,14 @@
 # Change Log
 
-## [1.1.2](https://github.com/ember-cli-deploy/ember-cli-deploy-build/tree/1.1.2) (2019-09-03)
-[Full Changelog](https://github.com/ember-cli-deploy/ember-cli-deploy-build/compare/v1.1.1...1.1.2)
+## [2.0.0](https://github.com/ember-cli-deploy/ember-cli-deploy-build/tree/2.0.0) (2019-09-03)
+[Full Changelog](https://github.com/ember-cli-deploy/ember-cli-deploy-build/compare/v1.1.2...2.0.0)
+
+**Merged pull requests:**
+
+- \[BREAKING\] include hidden files in distFiles [\#55](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/55) ([lukemelia](https://github.com/lukemelia))
+
+## [v1.1.2](https://github.com/ember-cli-deploy/ember-cli-deploy-build/tree/v1.1.2) (2019-09-03)
+[Full Changelog](https://github.com/ember-cli-deploy/ember-cli-deploy-build/compare/v1.1.1...v1.1.2)
 
 **Merged pull requests:**
 
