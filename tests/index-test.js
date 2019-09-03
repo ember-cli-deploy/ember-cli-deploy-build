@@ -157,7 +157,6 @@ describe('build plugin', function() {
                'assets/dummy.css',
                'assets/dummy.js',
                'assets/dummy.map',
-               'assets/test-support.css',
                'assets/test-support.js',
                'assets/test-support.map',
                'assets/tests.js',
