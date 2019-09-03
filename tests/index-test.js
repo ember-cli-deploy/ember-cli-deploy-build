@@ -135,6 +135,7 @@ describe('build plugin', function() {
           }
         }
       };
+      plugin.beforeHook(context);
     });
 
     afterEach(function() {
@@ -144,7 +145,10 @@ describe('build plugin', function() {
 
     it('builds the app and resolves with distDir and distFiles', function(done) {
       this.timeout(50000);
-      plugin.beforeHook(context);
+
+      var willInterruptProcess = require('ember-cli/lib/utilities/will-interrupt-process');
+      willInterruptProcess.capture(process);
+
       assert.isFulfilled(plugin.build(context))
         .then(function(result) {
           assert.deepEqual(result, {
@@ -153,6 +157,7 @@ describe('build plugin', function() {
                'assets/dummy.css',
                'assets/dummy.js',
                'assets/dummy.map',
+               'assets/test-support.css',
                'assets/test-support.js',
                'assets/test-support.map',
                'assets/tests.js',
@@ -160,7 +165,6 @@ describe('build plugin', function() {
                'assets/vendor.css',
                'assets/vendor.js',
                'assets/vendor.map',
-               'crossdomain.xml',
                'index.html',
                'robots.txt',
                'testem.js',
@@ -176,7 +180,6 @@ describe('build plugin', function() {
     it('can reuse build results and resolve with distDir and distFiles', function(done) {
       process.env.EMBER_CLI_DEPLOY_REUSE_BUILD = 'true';
       context.config.build.outputPath = __dirname + '/fixtures/fake-build-output';
-      plugin.beforeHook(context);
 
       assert.isFulfilled(plugin.build(context))
         .then(function(result) {
