@@ -1,13 +1,10 @@
-/*eslint-env node*/
-'use strict';
-
 var RSVP = require('rsvp');
 var glob  = require('glob');
 var DeployPluginBase = require('ember-cli-deploy-plugin');
 var path = require('path');
 
 module.exports = {
-  name: 'ember-cli-deploy-build',
+  name: require('./package').name,
 
   createDeployPlugin: function(options) {
     var DeployPlugin = DeployPluginBase.extend({
