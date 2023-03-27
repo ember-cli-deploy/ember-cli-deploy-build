@@ -35,7 +35,13 @@ module.exports = {
         });
 
         this.log('building app to `' + outputPath + '` using buildEnv `' + buildEnv + '`...', { verbose: true });
-        return builder.build()
+        let annotation = {
+          type: 'initial',
+          reason: 'build',
+          primaryFile: null,
+          changedFiles: [],
+        };
+        return builder.build(null, annotation)
           .finally(function() {
             return builder.cleanup();
           })
