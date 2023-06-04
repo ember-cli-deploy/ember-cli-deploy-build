@@ -1,7 +1,15 @@
 module.exports = {
   root: true,
+  parser: '@babel/eslint-parser',
   parserOptions: {
-    ecmaVersion: 2018
+    ecmaVersion: 2020,
+    sourceType: 'module',
+    requireConfigFile: false,
+    babelOptions: {
+      configFile: false,
+      // your babel options
+      presets: ["@babel/preset-env"],
+    },
   },
   plugins: [
     'ember'
@@ -42,6 +50,7 @@ module.exports = {
         node: true
       },
       plugins: ['node'],
+      extends: ['plugin:node/recommended'],
       rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
         // add your custom rules and overrides for node files here
         'ember/avoid-leaking-state-in-ember-objects': 'off'

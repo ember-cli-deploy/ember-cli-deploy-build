@@ -18,33 +18,34 @@
     "test": "mocha tests/**/*-test.js --exit"
   },
   "dependencies": {
-    "chalk": "^1.0.0",
-    "ember-cli-deploy-plugin": "^0.2.1",
-    "glob": "^7.1.1",
-    "rsvp": "^3.5.0"
+    "@babel/eslint-parser": "^7.21.8",
+    "chalk": "^4.1.2",
+    "ember-cli-deploy-plugin": "^0.2.9",
+    "glob": "^10.2.6",
+    "rsvp": "^4.8.5"
   },
   "devDependencies": {
-    "@ember/optional-features": "^0.7.0",
-    "chai": "^3.5.0",
-    "chai-as-promised": "^6.0.0",
-    "ember-cli": "~3.12.0",
-    "ember-cli-babel": "^7.7.3",
-    "ember-cli-htmlbars": "^3.0.1",
+    "@ember/optional-features": "^2.0.0",
+    "chai": "^4.3.7",
+    "chai-as-promised": "^7.1.1",
+    "ember-cli": "~3.28.6",
+    "ember-cli-babel": "^7.26.11",
+    "ember-cli-htmlbars": "^6.2.0",
     "ember-cli-release-tag": "^0.1.5",
-    "ember-maybe-import-regenerator": "^0.1.6",
-    "ember-source": "~3.12.0",
-    "eslint": "^6.1.0",
-    "eslint-plugin-ember": "^6.2.0",
-    "eslint-plugin-node": "^9.0.1",
-    "github": "^0.2.4",
-    "glob": "^7.1.1",
+    "ember-maybe-import-regenerator": "^1.0.0",
+    "ember-source": "~3.28.12",
+    "eslint": "^8.42.0",
+    "eslint-plugin-ember": "^11.8.0",
+    "eslint-plugin-node": "^11.1.0",
+    "github": "^14.0.0",
+    "glob": "^10.2.6",
     "loader.js": "^4.7.0",
-    "mocha": "^6.2.0",
-    "release-it": "^14.2.1",
-    "release-it-lerna-changelog": "^3.1.0"
+    "mocha": "^6.2.3",
+    "release-it": "~14.14.3",
+    "release-it-lerna-changelog": "~3.1.0"
   },
   "engines": {
-    "node": "12.* || 14.* || >= 16"
+    "node": "14.* || 16.* || 18.* || >= 20"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
@@ -66,5 +67,9 @@
       "release": true,
       "tokenRef": "GITHUB_AUTH"
     }
+  },
+  "volta": {
+    "node": "14.21.3",
+    "yarn": "1.22.19"
   }
 }
