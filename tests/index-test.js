@@ -16,7 +16,9 @@ describe('build plugin', function() {
     mockUi = {
       messages: [],
       verbose: true,
+      spinner: {},
       startProgress: function() { },
+      stopProgress: function() { },
       write: function() { },
       writeLine: function(message) {
         this.messages.push(message);
@@ -154,20 +156,20 @@ describe('build plugin', function() {
           assert.deepEqual(result, {
             distDir: 'tmp/dist-deploy',
             distFiles: [
-               'assets/dummy.css',
-               'assets/dummy.js',
-               'assets/dummy.map',
-               'assets/test-support.js',
-               'assets/test-support.map',
-               'assets/tests.js',
-               'assets/tests.map',
-               'assets/vendor.css',
-               'assets/vendor.js',
-               'assets/vendor.map',
-               'index.html',
-               'robots.txt',
-               'testem.js',
-               'tests/index.html'
+              'testem.js',
+              'robots.txt',
+              'index.html',
+              'tests/index.html',
+              'assets/vendor.map',
+              'assets/vendor.js',
+              'assets/vendor.css',
+              'assets/tests.map',
+              'assets/tests.js',
+              'assets/test-support.map',
+              'assets/test-support.js',
+              'assets/dummy.map',
+              'assets/dummy.js',
+              'assets/dummy.css',
             ]
           });
           done();
@@ -185,8 +187,8 @@ describe('build plugin', function() {
           assert.deepEqual(result, {
             distDir: __dirname + '/fixtures/fake-build-output',
             distFiles: [
-              'assets/inner-example.css',
-              'top-file-example.js'
+              'top-file-example.js',
+              'assets/inner-example.css'
             ]
           });
           done();
