@@ -1,5 +1,16 @@
 # Change Log
 
+
+## v3.0.0 (2023-06-04)
+
+#### :boom: Breaking Change
+* [#88](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/88) [BREAKING] Update dependencies including required node versions ([@lukemelia](https://github.com/lukemelia))
+* [#76](https://github.com/ember-cli-deploy/ember-cli-deploy-build/pull/76) [Breaking] Switch to Github Actions for CI ([@jrjohnson](https://github.com/jrjohnson))
+
+#### Committers: 2
+- Jon Johnson ([@jrjohnson](https://github.com/jrjohnson))
+- Luke Melia ([@lukemelia](https://github.com/lukemelia))
+
 ## [2.0.0](https://github.com/ember-cli-deploy/ember-cli-deploy-build/tree/2.0.0) (2019-09-03)
 [Full Changelog](https://github.com/ember-cli-deploy/ember-cli-deploy-build/compare/v1.1.2...2.0.0)
 
